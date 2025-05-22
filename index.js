@@ -24,9 +24,11 @@ Course.belongsTo(User, {
 // Routes
 const authRoutes = require('./routes/auth');
 const courseRoutes = require('./routes/courseRoutes');
+const lessonRoutes = require('./routes/lessonRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api', lessonRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
