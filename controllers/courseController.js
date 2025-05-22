@@ -85,3 +85,29 @@ exports.getInstructorByCourse = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+// Get a course by ID
+exports.getCourseById = async (req, res) => {
+  const { courseId } = req.params;
+
+  try {
+    const course = await Course.findOne({
+      where: { id: courseId },
+      include: {
+        model: User,
+        as: 'instructor',
+        attributes: ['id', 'name', 'email']
+      }
+    });
+
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    res.status(200).json(course);
+  } catch (error) {
+    console.error('Error fetching course by ID:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
